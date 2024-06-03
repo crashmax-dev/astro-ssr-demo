@@ -1,0 +1,16 @@
+---
+let counter = 0
+
+export const prerender = true;
+
+if (Astro.cookies.has("counter")) {
+  const cookie = Astro.cookies.get("counter")!
+  counter = cookie.number() + 1
+}
+
+Astro.cookies.set("counter", `${counter}`)
+Astro.response.headers.set('Cache-Control', 'public, max-age=1')
+---
+<html>
+  <h1>Counter = {counter}</h1>
+</html>
